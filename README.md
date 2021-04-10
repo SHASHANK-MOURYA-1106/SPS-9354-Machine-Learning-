@@ -20,6 +20,6 @@ For more info GOTO Cardiac-Failure-Project-Report.docx .
 
 Refer VideoDriveLink to know more about our project and its working.
 
-[a link](https://drive.google.com/file/d/148jK-cPI-SqOuWtaZOXA8I196KI2OhQa/view?usp=sharing)
+[https://drive.google.com/file/d/148jK-cPI-SqOuWtaZOXA8I196KI2OhQa/view?usp=sharing](https://drive.google.com/file/d/148jK-cPI-SqOuWtaZOXA8I196KI2OhQa/view?usp=sharing)
 
 Thank You!
