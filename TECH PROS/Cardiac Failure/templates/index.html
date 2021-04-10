@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>ML API</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+
+select { 
+  width: 100%; 
+  margin-bottom: 10px; 
+  background: #fff;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 13px;
+  color: #092756;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+  border: 1px solid rgba(0,0,0,0.3);
+  border-radius: 4px;
+  box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
+}
+.login{
+top: 30%;
+}
+.prediction{
+    bottom: 50%
+
+}
+</style>
+</head>
+
+<body>
+ <div class="login">
+    <h4>Cardiac Failure Predictor</h4>
+    
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('y_predict')}}"method="post">
+    
+        
+        
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label for="age">Enter your age</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                                <input type="text" class="form-control" id="age" name="age" placeholder="Your current age in years">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label for="sex">Enter your Gender</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                                <select class="form-control" id="sex" name="sex">
+                                    <option value="1">Male</option>
+                                    <option value="0">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label for="cp">Chest pain type?</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                                <select class="form-control" id="cp" name="cp">
+                                    <option value="0">No chest pain</option>
+                                    <option value="1">Typical angina(Chest pain due to emotional or physical stress</option>
+                                    <option value="2">Atypical angina(Discomfort in chest, no severe</option>
+                                    <option value="3">Non-anginal chest pain(Near sternum, oppressive or pressure like(Discomfort in chest, no severe</option>
+                                    <option value="4">Asymptomatic chest pain(Select if the above are not applicable)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label for="trtbps">Resting blood pressure (in mm Hg on admission to the hospital) </label>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                                <input type="text" class="form-control" id="trtbps" name="trtbps" placeholder="Your Blood Pressure">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label for="chol">Serum Cholestrol in mg/dl </label>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                                <input type="text" class="form-control" id="chol" name="chol" placeholder="Cholestrol">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label for="fbs">Fasting blood sugar>120mg/dl</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                                <select class="form-control" id="fbs" name="fbs">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label for="restecg">Rest ECG results</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                                <select class="form-control" id="restecg" name="restecg">
+                                    <option value="0">Normal</option>
+                                    <option value="1">Having ST-T wave abnormality (T wave inversions and/or ST elevation or depression of > 0.05 mV) </option>
+                                    <option value="2">Showing probable or definite left ventricular hypertrophy by Estes' criteria</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label for="thalachh">Maximum heart rate achieved during ecg</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                                <input type="text" class="form-control" id="thalachh" name="thalachh" placeholder="Max heart rate">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label for="exng">Chest pain during exercise?</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                                <select class="form-control" id="exng" name="exng">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label for="oldpeak">ST depression induced by exercise relative to rest</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                                <input type="text" class="form-control" id="oldpeak" name="oldpeak" placeholder="oldpeak">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label for="slp">slope: the slope of the peak exercise ST segment</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                                <select class="form-control" id="slp" name="slp">
+                                    <option value="0">upsloping</option>
+                                    <option value="1">flat</option>
+                                    <option value="2">downsloping</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label for="caa">caa: number of major vessels (0-3) colored by flourosopy</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                                <input type="text" class="form-control" id="caa" name="caa" placeholder="caa">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label for="thall"> A blood disorder called thalassemia </label>
+                            </div>
+                            <div class="col-lg-8 col-md-8">
+                              <select class="form-control" id="thall" name="thall">
+                                  <option value="1">Value 1: fixed defect (no blood flow in some part of the heart)</option>
+                                  <option value="2">Value 2: normal blood flow</option>
+                                  <option value="3">Value 3: reversible defect (a blood flow is observed but it is not normal)</option>
+                              </select>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+    
+        <button type="submit" class="btn btn-warning btn-block btn-large">Predict</button>
+    </div>
+     <div class="prediction">
+    {{ prediction_text }}
+</div>
+
+   <br>
+   <br>
+
+ </form>
+
+
+</body>
+</html>
+
